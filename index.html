@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script>
+        var userData = [];
+
+        function validateEmail(emailId) {
+            var mailformat = /^[A-Za-z]([A-Za-z0-9_\-])*@gmail\.com$/;
+            var errorElement = document.getElementById('email-error');
+
+            if (emailId.value.match(mailformat)) {
+                errorElement.textContent = '';
+                return true;
+            } else {
+                errorElement.textContent = 'Invalid email address';
+                return false;
+            }
+        }
+
+        function validatePhoneNumber(phoneNumberId) {
+            var phoneFormat = /^(?!([6789])\1{9})[6789]\d{9}$/;
+            var errorElement = document.getElementById('phone-error');
+
+            if (phoneNumberId.value.match(phoneFormat)) {
+                errorElement.textContent = '';
+                return true;
+            } else {
+                errorElement.textContent = 'Invalid phone number';
+                return false;
+            }
+        }
+
+        function validatePassword(passwordId) {
+            var passwordFormat = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&()+_])(?=.*\d)[A-Za-z\d!@#$%^&()_+]{6,}$/;
+            var errorElement = document.getElementById('password-error');
+
+            if (passwordId.value.match(passwordFormat)) {
+                errorElement.textContent = '';
+                return true;
+            } else {
+                errorElement.textContent = 'Invalid password';
+                return false;
+            }
+        }
+
+        function confirmPassword(confirmPasswordId) {
+            var password = document.getElementById("password").value;
+            var confirmPassword = confirmPasswordId.value;
+            var errorElement = document.getElementById('confirm-password-error');
+
+            if (password === confirmPassword) {
+                errorElement.textContent = '';
+                return true;
+            } else {
+                errorElement.textContent = 'Passwords do not match';
+                return false;
+            }
+        }
+
+        function validateForm() {
+            var email = document.getElementById("email").value;
+            var phoneNumber = document.getElementById("phoneNumber").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (!validateEmail({ value: email })) {
+                alert("Invalid email address");
+                return false;
+            }
+
+            if (!validatePhoneNumber({ value: phoneNumber })) {
+                alert("Invalid phone number");
+                return false;
+            }
+
+            if (!validatePassword({ value: password })) {
+                alert("Invalid password");
+                return false;
+            }
+
+            if (!confirmPassword(document.getElementById("confirmPassword"))) {
+                alert("Passwords do not match");
+                return false;
+            }
+
+            // Simulate successful signup
+            localStorage.setItem('userSignedUp', 'true');
+
+            // Display success message
+            alert("Signup successful.");
+
+            // Redirect to the login page after successful signup
+            window.location.href = "login.html";
+
+            return false; // Prevent the default form submission
+        }
+    </script>
+    <style>
+        body {
+            background-image: url(LAB3color.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .styled-container {
+            background-color: rgba(7, 7, 7, 0.3);
+            width: 580px;
+            height: 550px;
+            text-align: center;
+            border-radius: 20px;
+            margin-top: 30px;
+            margin-left: 400px;
+            padding-bottom: 500px;
+            padding-top: 180px;
+            border: 2px solid rgb(25, 22, 22);
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        #success-message {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="styled-container">
+        <form onsubmit="return validateForm()">
+            <input type="text" id="email" placeholder="Enter mail id" required onchange="validateEmail(this)"><br>
+            <span class="error-message" id="email-error"></span><br>
+
+            <input type="tel" id="phoneNumber" placeholder="Enter phone number" required
+                onchange="validatePhoneNumber(this)"><br>
+            <span class="error-message" id="phone-error"></span><br>
+
+            <input type="password" id="password" placeholder="Enter password" required
+                onchange="validatePassword(this)"><br>
+            <span class="error-message" id="password-error"></span><br>
+
+            <input type="password" id="confirmPassword" placeholder="Confirm password" required
+                onchange="confirmPassword(this)">
+            <span class="error-message" id="confirm-password-error"></span><br>
+
+            <input type="submit" value="Submit" class="btn btn-primary" style="color: black;"><br><br><br>
+
+            <!-- Success message will be displayed here -->
+            <p id="success-message"></p>
+        </form>
+
+        <p style="margin-top: 20px;">Already have an account? <a href="login.html">Login</a></p>
+    </div>
+</body>
+
+</html>

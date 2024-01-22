@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body{
+            background-image: url(LAB3color.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .styled-container {
+            background-color: rgba(7, 7, 7, 0.3);;
+            width: 400px;
+            height:300px;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 50px auto;
+            border: 2px solid rgb(25, 22, 22);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-message {
+            color: red;
+        }
+    </style>
+    <script>
+        function validateEmail(emailId) {
+            var mailformat = /^[A-Za-z]([A-Za-z0-9_\-])*@gmail\.com$/;
+            var errorElement = document.getElementById('email-error');
+
+            if (emailId.value.match(mailformat)) {
+                errorElement.textContent = '';
+                return true;
+            } else {
+                errorElement.textContent = 'Invalid email address';
+                return false;
+            }
+        }
+
+        function validatePassword(passwordId) {
+            var passwordFormat = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&()+_])(?=.*\d)[A-Za-z\d!@#$%^&()_+]{6,}$/;
+            var errorElement = document.getElementById('password-error');
+
+            if (passwordId.value.match(passwordFormat)) {
+                errorElement.textContent = '';
+                return true;
+            } else {
+                errorElement.textContent = 'Invalid password';
+                return false;
+            }
+        }
+
+        function handleSubmit() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            var emailValid = validateEmail(document.getElementById("email"));
+            var passwordValid = validatePassword(document.getElementById("password"));
+
+            if (!emailValid && !passwordValid) {
+                alert("Enter email and password");
+                return;
+            } else if (!emailValid) {
+                alert("Enter email");
+                return;
+            } else if (!passwordValid) {
+                alert("Enter  password");
+                return;
+            }
+
+            
+            var hasSignedUp = localStorage.getItem('userSignedUp');
+
+            console.log('Value in localStorage:', hasSignedUp); 
+
+            if (!hasSignedUp || hasSignedUp !== 'true') {
+                alert("You have not signed up. Redirecting to signup page.");
+                window.location.href = "signup.html";
+            } else {
+               
+                alert("Login successful for email: " + email);
+                
+                window.location.href = "navbar.html";
+            }
+        }
+
+    </script>
+    <style>
+         body{
+            background-image: url(LAB3color.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .styled-container {
+            background-color: rgba(7, 7, 7, 0.3);;
+            width: 400px;
+            height:300px;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 50px auto;
+            border: 2px solid rgb(25, 22, 22);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-message {
+            color: red;
+        }
+        
+        #success-message {
+            color: green;
+        }
+
+    </style>
+</head>
+
+<body style="background-color: rgb(75, 75, 157);">
+    <div class="styled-container">
+        <h1 style="color: white;">Login</h1><br><br>
+        <input type="text" id="email" placeholder="Enter personal mail id" onchange="validateEmail(this)" required><br>
+        <span class="error-message" id="email-error"></span><br>
+
+        <input type="password" id="password" placeholder="Enter password" onchange="validatePassword(this)" required><br>
+        <span class="error-message" id="password-error"></span><br>
+
+        <button type="button" class="btn btn-primary" style="color: black;" onclick="handleSubmit()">Submit</button><br>
+
+       
+    </div>
+</body>
+
+</html>
